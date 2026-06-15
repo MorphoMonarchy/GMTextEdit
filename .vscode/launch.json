@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Odin Program",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\Odin\\build\\textedit.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}\\Odin",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "Odin: Build Only"
+        }
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Odin: Build and Run",
+            "type": "shell",
+            "command": ".\\build.bat",
+            "options": {
+                "cwd": "${workspaceFolder}\\Odin"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            }
+        },
+        {
+            "label": "Odin: Build Only",
+            "type": "shell",
+            "command": ".\\build.bat",
+            "args": [
+                "build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\Odin"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            }
+        }
+    ]
+}

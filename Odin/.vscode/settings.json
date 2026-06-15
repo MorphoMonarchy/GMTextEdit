@@ -1,0 +1,11 @@
+{
+    "code-runner.runInTerminal": true,
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.showExecutionMessage": true,
+    "code-runner.executorMapByFileExtension": {
+        ".odin": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"& '$dir\\build.bat'\""
+    },
+    "code-runner.executorMap": {
+        "odin": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"& '$dir\\build.bat'\""
+    }
+}
