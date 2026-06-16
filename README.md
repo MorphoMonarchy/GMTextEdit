@@ -37,30 +37,6 @@ GM/extensions/ext_gmtextedit/gmtextedit.dll
 Linux and macOS builds would need matching shared libraries (`.so` / `.dylib`)
 and GameMaker extension proxy-file metadata for those targets.
 
-## Building
-
-From the repository root on Windows:
-
-```bat
-Odin\build.bat build
-```
-
-This builds:
-
-```text
-Odin/build/textedit.exe
-Odin/build/gmtextedit.dll
-```
-
-After rebuilding the DLL, copy it into the GameMaker extension folder:
-
-```bat
-copy Odin\build\gmtextedit.dll GM\extensions\ext_gmtextedit\gmtextedit.dll
-```
-
-Running `Odin\build.bat` without `build` runs the Odin test executable first.
-If all tests pass, it prints `GMTextEdit ready` and then builds the DLL.
-
 ## GameMaker Example
 
 Open the GameMaker project at:
