@@ -17,7 +17,7 @@ GMTextEdit/
     rooms/Room1               Example room with the sample object
     scripts/                  Command/status enums for GameMaker
   Odin/
-    textedit.odin             Odin source for the DLL and self-test
+    textedit.odin             Odin source for the DLL and test runner
     build.bat                 Windows build script
     build/                    Build outputs
 ```
@@ -58,7 +58,8 @@ After rebuilding the DLL, copy it into the GameMaker extension folder:
 copy Odin\build\gmtextedit.dll GM\extensions\ext_gmtextedit\gmtextedit.dll
 ```
 
-Running `Odin\build.bat` without `build` also runs the Odin self-test executable.
+Running `Odin\build.bat` without `build` runs the Odin test executable first.
+If all tests pass, it prints `GMTextEdit ready` and then builds the DLL.
 
 ## GameMaker Example
 
@@ -75,6 +76,7 @@ GM/GMTextEdit.yyp
 - handles common edit/navigation commands with `gmte_command`
 - draws the edited string
 - displays caret, anchor, selection, clipboard, and error status values
+- mirrors copied/cut text to the system clipboard and reads system clipboard text before paste
 
 The example includes multiline text so Up/Down caret movement can be tested
 immediately.
@@ -139,7 +141,8 @@ the Odin DLL.
 - Selection and caret positions are byte indices, not GameMaker character
   indices.
 - The extension stores text editor states by string id.
-- The clipboard functions use an extension-managed clipboard buffer, not the
-  operating system clipboard.
+- The extension clipboard functions use an internal buffer. The included
+  GameMaker example mirrors Copy/Cut to the system clipboard and syncs the
+  system clipboard into the extension before Paste.
 - Up/Down and line-start/end movement are handled inside the Odin wrapper before
   dispatching to Odin's built-in text edit commands.

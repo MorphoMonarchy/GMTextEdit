@@ -8,11 +8,14 @@ if (ctrl_down) {
         changed = true;
     } else if (keyboard_check_pressed(ord("C"))) {
         display_text = gmte_command(editor_id, GMTE_Command.Copy);
+        clipboard_set_text(gmte_clipboard_get());
         changed = true;
     } else if (keyboard_check_pressed(ord("X"))) {
         display_text = gmte_command(editor_id, GMTE_Command.Cut);
+        clipboard_set_text(gmte_clipboard_get());
         changed = true;
     } else if (keyboard_check_pressed(ord("V"))) {
+        gmte_clipboard_set(clipboard_get_text());
         display_text = gmte_command(editor_id, GMTE_Command.Paste);
         changed = true;
     } else if (keyboard_check_pressed(ord("Z"))) {
@@ -80,5 +83,6 @@ selection_start = gmte_get_selection_start(editor_id);
 selection_end = gmte_get_selection_end(editor_id);
 selected_text = gmte_get_selected_text(editor_id);
 clipboard_text = gmte_clipboard_get();
+system_clipboard_text = clipboard_get_text();
 status = gmte_last_status();
 error_text = gmte_last_error();

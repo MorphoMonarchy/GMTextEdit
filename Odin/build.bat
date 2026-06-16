@@ -59,6 +59,15 @@ if not "%STATUS%"=="0" (
     exit /b %STATUS%
 )
 
+if "%RUN_AFTER_BUILD%"=="1" (
+    "%OUT_EXE%"
+    set "STATUS=%ERRORLEVEL%"
+    if not "%STATUS%"=="0" (
+        popd
+        exit /b %STATUS%
+    )
+)
+
 "%ODIN_DIR%\odin.exe" build . -build-mode:dll -out:"%OUT_DLL%"
 set "STATUS=%ERRORLEVEL%"
 if not "%STATUS%"=="0" (
@@ -66,13 +75,9 @@ if not "%STATUS%"=="0" (
     exit /b %STATUS%
 )
 
-if "%RUN_AFTER_BUILD%"=="1" (
-    "%OUT_EXE%"
-    set "STATUS=%ERRORLEVEL%"
-) else (
+if "%RUN_AFTER_BUILD%"=="0" (
     echo Built %OUT_EXE%
     echo Built %OUT_DLL%
-    set "STATUS=0"
 )
 
 popd

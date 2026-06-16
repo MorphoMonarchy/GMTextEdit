@@ -21,9 +21,10 @@ draw_text(edit_x, edit_y + edit_height + 24, "caret " + string(caret) + "  ancho
 
 draw_set_color(make_color_rgb(188, 210, 180));
 draw_text(edit_x, edit_y + edit_height + 52, "selected: " + selected_text);
-draw_text(edit_x, edit_y + edit_height + 80, "clipboard: " + clipboard_text);
+draw_text(edit_x, edit_y + edit_height + 80, "internal clipboard: " + clipboard_text);
+draw_text(edit_x, edit_y + edit_height + 108, "system clipboard: " + system_clipboard_text);
 
 if (status != GMTE_Status.OK) {
     draw_set_color(make_color_rgb(255, 112, 112));
-    draw_text(edit_x, edit_y + edit_height + 116, "status " + string(status) + ": " + error_text);
+    draw_text(edit_x, edit_y + edit_height + 144, "status " + string(status) + ": " + error_text);
 }
