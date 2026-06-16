@@ -140,6 +140,76 @@ command_from_real :: proc(command: f64) -> (cmd: textedit.Command, ok: bool) {
 	return textedit.Command(value), true
 }
 
+command_needs_line_navigation :: proc(cmd: textedit.Command) -> bool {
+	#partial switch cmd {
+	case .Up,
+	     .Down,
+	     .Line_Start,
+	     .Line_End,
+	     .Select_Up,
+	     .Select_Down,
+	     .Select_Line_Start,
+	     .Select_Line_End:
+		return true
+	}
+	return false
+}
+
+editor_update_line_navigation :: proc(editor: ^Editor) {
+	buf := editor.builder.buf[:]
+	caret := clamp_byte_index(editor, editor.state.selection[0])
+
+	line_start := 0
+	line_end := len(buf)
+
+	for i in 0..<len(buf) {
+		if buf[i] == 10 {
+			if i < caret {
+				line_start = i + 1
+			} else {
+				line_end = i
+				break
+			}
+		}
+	}
+
+	column := caret - line_start
+	up_index := caret
+	down_index := caret
+
+	if line_start > 0 {
+		prev_start := 0
+		prev_end := line_start - 1
+
+		for i in 0..<prev_end {
+			if buf[i] == 10 {
+				prev_start = i + 1
+			}
+		}
+
+		up_index = min(prev_start + column, prev_end)
+	}
+
+	if line_end < len(buf) {
+		next_start := line_end + 1
+		next_end := len(buf)
+
+		for i := next_start; i < len(buf); i += 1 {
+			if buf[i] == 10 {
+				next_end = i
+				break
+			}
+		}
+
+		down_index = min(next_start + column, next_end)
+	}
+
+	editor.state.line_start = clamp_byte_index(editor, line_start)
+	editor.state.line_end = clamp_byte_index(editor, line_end)
+	editor.state.up_index = clamp_byte_index(editor, up_index)
+	editor.state.down_index = clamp_byte_index(editor, down_index)
+}
+
 // Command values mirror core:text/edit.Command:
 // 0 None, 1 Undo, 2 Redo, 3 New_Line, 4 Cut, 5 Copy, 6 Paste, 7 Select_All,
 // 8 Backspace, 9 Delete, 10 Delete_Word_Left, 11 Delete_Word_Right,
@@ -277,6 +347,10 @@ gmte_command :: proc "c" (id: cstring, command: f64) -> cstring {
 	if !command_ok {
 		set_status(.Invalid_Command, "command value is outside core:text/edit.Command")
 		return return_string(editor_text(editor))
+	}
+
+	if command_needs_line_navigation(cmd) {
+		editor_update_line_navigation(editor)
 	}
 
 	textedit.perform_command(&editor.state, cmd)
@@ -480,6 +554,13 @@ main :: proc() {
 	gmte_command(id, cmd_real(.Select_All))
 	gmte_command(id, cmd_real(.Copy))
 	fmt.printf("%-24s clipboard=\"%s\"\n", "copy all", string(gmte_clipboard_get()))
+
+	gmte_set_text(id, cstring("abc\ndef\nghi"))
+	gmte_set_selection(id, 5, 5)
+	gmte_command(id, cmd_real(.Up))
+	print_editor("move up", id)
+	gmte_command(id, cmd_real(.Down))
+	print_editor("move down", id)
 
 	gmte_destroy_all()
 	fmt.printf("%-24s exists=%d status=%d\n", "destroy all", int(gmte_exists(id)), int(gmte_last_status()))

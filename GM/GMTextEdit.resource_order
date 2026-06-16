@@ -1,4 +1,9 @@
 {
-  "FolderOrderSettings":[],
-  "ResourceOrderSettings":[],
+  "FolderOrderSettings":[
+    {"name":"GMTextEdit","order":1,"path":"folders/GMTextEdit.yy",},
+  ],
+  "ResourceOrderSettings":[
+    {"name":"obj_gmtextedit_example","order":2,"path":"objects/obj_gmtextedit_example/obj_gmtextedit_example.yy",},
+    {"name":"scr_gmtextedit_constants","order":1,"path":"scripts/scr_gmtextedit_constants/scr_gmtextedit_constants.yy",},
+  ],
 }

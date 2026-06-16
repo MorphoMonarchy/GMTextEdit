@@ -9,7 +9,9 @@
     "name":"Default",
   },
   "defaultScriptType":0,
-  "Folders":[],
+  "Folders":[
+    {"$GMFolder":"","%Name":"GMTextEdit","folderPath":"folders/GMTextEdit.yy","name":"GMTextEdit","resourceType":"GMFolder","resourceVersion":"2.0",},
+  ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[],
   "isEcma":false,
@@ -19,7 +21,10 @@
   },
   "name":"GMTextEdit",
   "resources":[
+    {"id":{"name":"ext_gmtextedit","path":"extensions/ext_gmtextedit/ext_gmtextedit.yy",},},
+    {"id":{"name":"obj_gmtextedit_example","path":"objects/obj_gmtextedit_example/obj_gmtextedit_example.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"scr_gmtextedit_constants","path":"scripts/scr_gmtextedit_constants/scr_gmtextedit_constants.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",

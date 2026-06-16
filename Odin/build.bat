@@ -9,6 +9,7 @@ set "SDK_DIR=C:\Program Files (x86)\Windows Kits\10"
 set "ODIN_DIR=C:\Users\jhwar\OneDrive\Documents\Odin\OdinRepo"
 set "PROJECT_DIR=%~dp0"
 set "BUILD_DIR=%PROJECT_DIR%build"
+set "OUT_DLL=%BUILD_DIR%\gmtextedit.dll"
 set "OUT_EXE=%BUILD_DIR%\textedit.exe"
 set "RUN_AFTER_BUILD=1"
 
@@ -58,11 +59,19 @@ if not "%STATUS%"=="0" (
     exit /b %STATUS%
 )
 
+"%ODIN_DIR%\odin.exe" build . -build-mode:dll -out:"%OUT_DLL%"
+set "STATUS=%ERRORLEVEL%"
+if not "%STATUS%"=="0" (
+    popd
+    exit /b %STATUS%
+)
+
 if "%RUN_AFTER_BUILD%"=="1" (
     "%OUT_EXE%"
     set "STATUS=%ERRORLEVEL%"
 ) else (
     echo Built %OUT_EXE%
+    echo Built %OUT_DLL%
     set "STATUS=0"
 )
 

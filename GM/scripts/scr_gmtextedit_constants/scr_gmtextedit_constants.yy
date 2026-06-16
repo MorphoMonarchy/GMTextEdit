@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_gmtextedit_constants",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_gmtextedit_constants",
+  "parent":{
+    "name":"GMTextEdit",
+    "path":"folders/GMTextEdit.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
