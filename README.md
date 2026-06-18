@@ -1,5 +1,7 @@
 # GMTextEdit
 
+Note: this repo is AI generated so use with caution!
+
 GMTextEdit is a small GameMaker + Odin project that wraps Odin's `core:text/edit`
 text editing primitives in a native extension for GameMaker.
 
