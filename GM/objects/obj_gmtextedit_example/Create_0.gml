@@ -6,9 +6,10 @@ edit_width = 740;
 edit_height = 220;
 line_sep = 24;
 
-display_text = "Edit this text with gmtextedit.dll.\nMove between these lines with Up and Down.\nThe caret state below should follow.";
+display_text = "Edit this text with GMTextEdit.\nMove between these lines with Up and Down.\nThe caret state below should follow.";
 selected_text = "";
 clipboard_text = "";
+local_clipboard_text = "";
 system_clipboard_text = "";
 status = GMTE_Status.OK;
 error_text = "";

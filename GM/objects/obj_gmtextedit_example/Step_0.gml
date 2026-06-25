@@ -8,14 +8,22 @@ if (ctrl_down) {
         changed = true;
     } else if (keyboard_check_pressed(ord("C"))) {
         display_text = gmte_command(editor_id, GMTE_Command.Copy);
-        clipboard_set_text(gmte_clipboard_get());
+        local_clipboard_text = gmte_clipboard_get();
+        clipboard_set_text(local_clipboard_text);
         changed = true;
     } else if (keyboard_check_pressed(ord("X"))) {
         display_text = gmte_command(editor_id, GMTE_Command.Cut);
-        clipboard_set_text(gmte_clipboard_get());
+        local_clipboard_text = gmte_clipboard_get();
+        clipboard_set_text(local_clipboard_text);
         changed = true;
     } else if (keyboard_check_pressed(ord("V"))) {
-        gmte_clipboard_set(clipboard_get_text());
+        var paste_text = clipboard_get_text();
+        if (paste_text != "") {
+            local_clipboard_text = paste_text;
+            gmte_clipboard_set(paste_text);
+        } else if (local_clipboard_text != "") {
+            gmte_clipboard_set(local_clipboard_text);
+        }
         display_text = gmte_command(editor_id, GMTE_Command.Paste);
         changed = true;
     } else if (keyboard_check_pressed(ord("Z"))) {
@@ -84,5 +92,8 @@ selection_end = gmte_get_selection_end(editor_id);
 selected_text = gmte_get_selected_text(editor_id);
 clipboard_text = gmte_clipboard_get();
 system_clipboard_text = clipboard_get_text();
+if (system_clipboard_text != "") {
+    local_clipboard_text = system_clipboard_text;
+}
 status = gmte_last_status();
 error_text = gmte_last_error();

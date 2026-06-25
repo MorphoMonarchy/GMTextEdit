@@ -11,6 +11,10 @@ set "PROJECT_DIR=%~dp0"
 set "BUILD_DIR=%PROJECT_DIR%build"
 set "OUT_DLL=%BUILD_DIR%\gmtextedit.dll"
 set "OUT_EXE=%BUILD_DIR%\textedit.exe"
+set "OUT_WASM=%BUILD_DIR%\gmtextedit.wasm"
+set "OUT_GM_DLL=%PROJECT_DIR%..\GM\extensions\ext_gmtextedit\gmtextedit.dll"
+set "OUT_GX_JS=%PROJECT_DIR%..\GM\extensions\ext_gmtextedit\gmtextedit.js"
+set "GX_BRIDGE_SCRIPT=%PROJECT_DIR%build_gx_bridge.ps1"
 set "RUN_AFTER_BUILD=1"
 
 if /i "%~1"=="build" set "RUN_AFTER_BUILD=0"
@@ -75,9 +79,33 @@ if not "%STATUS%"=="0" (
     exit /b %STATUS%
 )
 
+copy /Y "%OUT_DLL%" "%OUT_GM_DLL%" >nul
+set "STATUS=%ERRORLEVEL%"
+if not "%STATUS%"=="0" (
+    popd
+    exit /b %STATUS%
+)
+
+"%ODIN_DIR%\odin.exe" build . -target:js_wasm32 -no-entry-point -out:"%OUT_WASM%"
+set "STATUS=%ERRORLEVEL%"
+if not "%STATUS%"=="0" (
+    popd
+    exit /b %STATUS%
+)
+
+powershell -NoProfile -ExecutionPolicy Bypass -File "%GX_BRIDGE_SCRIPT%" -WasmPath "%OUT_WASM%" -OutJs "%OUT_GX_JS%"
+set "STATUS=%ERRORLEVEL%"
+if not "%STATUS%"=="0" (
+    popd
+    exit /b %STATUS%
+)
+
 if "%RUN_AFTER_BUILD%"=="0" (
     echo Built %OUT_EXE%
     echo Built %OUT_DLL%
+    echo Built %OUT_GM_DLL%
+    echo Built %OUT_WASM%
+    echo Built %OUT_GX_JS%
 )
 
 popd
